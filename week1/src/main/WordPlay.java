@@ -1,3 +1,5 @@
+package main;
+
 class WordPlay {
   public static boolean isVowel(char ch) {
     return "aeiou".indexOf(Character.toLowerCase(ch)) != -1;
