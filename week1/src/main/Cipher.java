@@ -1,13 +1,13 @@
 package main;
 
-public class Cipher {
+abstract class Cipher {
   protected String alphabet;
 
   protected Cipher() {
     this.alphabet = getAlphabet();
   }
 
-  private static String getAlphabet() {
+  protected static String getAlphabet() {
     StringBuilder alphabet = new StringBuilder();
 
     for (int i = 65; i < 91; i++) {
@@ -20,4 +20,8 @@ public class Cipher {
   protected String getShiftedAlphabet(int key) {
     return this.alphabet.substring(key) + this.alphabet.substring(0, key);
   }
+
+  abstract String encrypt(String input);
+
+  abstract String decrypt(String input);
 }

@@ -33,4 +33,12 @@ public class CaesarCipherTwo extends Cipher {
 
     return output.toString();
   }
+
+  public String decrypt(String input) {
+    return input;
+  }
+
+  public static void main(String[] args) {
+    //
+  }
 }
