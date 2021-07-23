@@ -1,6 +1,6 @@
 package main;
 
-abstract class Cipher {
+public abstract class Cipher {
   protected String alphabet;
 
   protected Cipher() {
@@ -21,7 +21,7 @@ abstract class Cipher {
     return this.alphabet.substring(key) + this.alphabet.substring(0, key);
   }
 
-  abstract String encrypt(String input);
+  public abstract String encrypt(String input);
 
-  abstract String decrypt(String input);
+  public abstract String decrypt(String input);
 }
