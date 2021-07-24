@@ -39,4 +39,29 @@ public class Utils {
       return "";
     }
   }
+
+  public static int getMaximumValue(int[] values) {
+    // Only works if array is non-empty
+    int currentValue;
+    int maximumValue = values[0];
+
+    for (int i = 1; i < values.length; i++) {
+      if ((currentValue = values[i]) > maximumValue) {
+        maximumValue = currentValue;
+      }
+    }
+
+    return maximumValue;
+  }
+
+  public static int indexOfMax(int[] values) {
+    int idx = 0;
+    int maximumValue = getMaximumValue(values);
+
+    while (values[idx] != maximumValue) {
+      idx++;
+    }
+
+    return idx;
+  }
 }
