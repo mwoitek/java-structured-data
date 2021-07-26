@@ -23,5 +23,5 @@ public abstract class Cipher {
 
   public abstract String encrypt(String input);
 
-  public abstract String decrypt(String input);
+  public abstract String decrypt(String input, int idxMostCommonLetter);
 }

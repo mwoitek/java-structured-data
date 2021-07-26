@@ -1,5 +1,7 @@
 package main;
 
+import utils.Utils;
+
 public class CaesarCipher extends Cipher {
   private String shiftedAlphabet;
 
@@ -9,13 +11,11 @@ public class CaesarCipher extends Cipher {
   }
 
   public String encrypt(String input) {
-    char ch;
     char chShifted;
     int idx;
     StringBuilder output = new StringBuilder();
 
-    for (int i = 0; i < input.length(); i++) {
-      ch = input.charAt(i);
+    for (char ch : input.toCharArray()) {
       idx = this.alphabet.indexOf(Character.toUpperCase(ch));
 
       if (idx != -1) {
@@ -29,11 +29,28 @@ public class CaesarCipher extends Cipher {
     return output.toString();
   }
 
-  public String decrypt(String input) {
-    return input;
+  private int[] countLetters(String input) {
+    int[] counts = new int[this.alphabet.length()];
+    int idx;
+
+    for (char ch : input.toCharArray()) {
+      idx = this.alphabet.indexOf(Character.toUpperCase(ch));
+
+      if (idx != -1) {
+        counts[idx]++;
+      }
+    }
+
+    return counts;
   }
 
-  public static void main(String[] args) {
-    //
+  public String decrypt(String input, int idxMostCommonLetter) {
+    int[] counts = countLetters(input);
+    int idxMaxCounts = Utils.indexOfMax(counts);
+    int deltaIdx = Math.abs(idxMaxCounts - idxMostCommonLetter);
+    int decrypt_key =
+        idxMaxCounts > idxMostCommonLetter ? this.alphabet.length() - deltaIdx : deltaIdx;
+    CaesarCipher cc = new CaesarCipher(decrypt_key);
+    return cc.encrypt(input);
   }
 }

@@ -16,7 +16,7 @@ public class TestCipher extends Cipher {
     return input;
   }
 
-  public String decrypt(String input) {
+  public String decrypt(String input, int idxMostCommonLetter) {
     return input;
   }
 
