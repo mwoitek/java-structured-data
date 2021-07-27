@@ -44,13 +44,16 @@ public class CaesarCipher extends Cipher {
     return counts;
   }
 
-  public String decrypt(String input, int idxMostCommonLetter) {
+  public int getEncryptKey(String input, int idxMostCommonLetter) {
     int[] counts = countLetters(input);
     int idxMaxCounts = Utils.indexOfMax(counts);
     int deltaIdx = Math.abs(idxMaxCounts - idxMostCommonLetter);
-    int decrypt_key =
-        idxMaxCounts > idxMostCommonLetter ? this.alphabet.length() - deltaIdx : deltaIdx;
-    CaesarCipher cc = new CaesarCipher(decrypt_key);
+    return idxMaxCounts > idxMostCommonLetter ? deltaIdx : this.alphabet.length() - deltaIdx;
+  }
+
+  public String decrypt(String input, int idxMostCommonLetter) {
+    int encryptKey = getEncryptKey(input, idxMostCommonLetter);
+    CaesarCipher cc = new CaesarCipher(this.alphabet.length() - encryptKey);
     return cc.encrypt(input);
   }
 }
