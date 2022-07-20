@@ -1,17 +1,23 @@
 package solution;
 
 import java.util.ArrayList;
+import edu.duke.FileResource;
 
 public class LogAnalyzer {
 
   private ArrayList<LogEntry> records;
 
   public LogAnalyzer() {
-    // complete constructor
+    records = new ArrayList<LogEntry>();
   }
 
   public void readFile(String filename) {
-    // complete method
+    FileResource fr = new FileResource(filename);
+    LogEntry le;
+    for (String line : fr.lines()) {
+      le = WebLogParser.parseEntry(line);
+      records.add(le);
+    }
   }
 
   public void printAll() {

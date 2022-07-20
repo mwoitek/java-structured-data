@@ -12,7 +12,15 @@ public class Tester {
   }
 
   public void testLogAnalyzer() {
-    // complete method
+    LogAnalyzer la = new LogAnalyzer();
+    la.readFile("../log/short-test_log");
+    la.printAll();
+  }
+
+  public static void main(String[] args) {
+    Tester t = new Tester();
+    t.testLogEntry();
+    t.testLogAnalyzer();
   }
 
 }
