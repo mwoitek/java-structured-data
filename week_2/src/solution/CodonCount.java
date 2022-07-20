@@ -78,7 +78,8 @@ public class CodonCount {
           + this.codonMap.size() + " unique codons");
       System.out.println("and most common codon is " + mostCommonCodon + " with count "
           + this.codonMap.get(mostCommonCodon));
-      this.printCodonCounts(1, 5);
+      // this.printCodonCounts(1, 5);
+      this.printCodonCounts(6, 8);
 
       System.out.println();
     }
