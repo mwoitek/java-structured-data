@@ -19,8 +19,12 @@ public class WordsInFiles {
     ArrayList<String> filesList;
     FileResource resource = new FileResource(f.getAbsolutePath());
     for (String word : resource.words()) {
-      if (this.wordFileMap.keySet().contains(word)) {
-        this.wordFileMap.get(word).add(fileName);
+      if (this.wordFileMap.containsKey(word)) {
+        filesList = this.wordFileMap.get(word);
+        if (!filesList.contains(fileName)) {
+          filesList.add(fileName);
+          this.wordFileMap.put(word, filesList);
+        }
       } else {
         filesList = new ArrayList<String>();
         filesList.add(fileName);
@@ -65,7 +69,7 @@ public class WordsInFiles {
     }
   }
 
-  private void tester() {
+  public void tester() {
     this.buildWordFileMap();
 
     int maximum = this.maxNumber();
@@ -83,7 +87,21 @@ public class WordsInFiles {
 
   public static void main(String[] args) {
     WordsInFiles wif = new WordsInFiles();
-    wif.tester();
+    // wif.tester();
+
+    wif.buildWordFileMap();
+
+    ArrayList<String> words = wif.wordsInNumFiles(7);
+    System.out.println("Question 12 - Answer: " + words.size());
+
+    words = wif.wordsInNumFiles(4);
+    System.out.println("Question 13 - Answer: " + words.size());
+
+    System.out.println("Files in which the word 'laid' DOES appear:");
+    wif.printFilesIn("laid");
+
+    System.out.println("Files in which the word 'tree' appears:");
+    wif.printFilesIn("tree");
   }
 
 }
