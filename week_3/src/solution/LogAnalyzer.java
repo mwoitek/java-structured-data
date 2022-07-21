@@ -155,4 +155,34 @@ public class LogAnalyzer {
     return iPsMostVisits(counts);
   }
 
+  public static void main(String[] args) {
+    LogAnalyzer la = new LogAnalyzer();
+    la.readFile("../log/weblog2_log");
+
+    System.out.println("Question 4 - Answer: " + la.countUniqueIPs());
+
+    ArrayList<String> uniqueIPs = la.uniqueIPVisitsOnDay("Sep 24");
+    System.out.println("Question 5 - Answer: " + uniqueIPs.size());
+
+    System.out.println("Question 6 - Answer: " + la.countUniqueIPsInRange(200, 299));
+
+    HashMap<String, Integer> counts = la.countVisitsPerIP();
+    System.out.println("Question 7 - Answer: " + la.mostNumberVisitsByIP(counts));
+
+    ArrayList<String> ips = la.iPsMostVisits(counts);
+    System.out.println("Question 8 - Answer:");
+    for (String ip : ips) {
+      System.out.println(ip);
+    }
+
+    HashMap<String, ArrayList<String>> daysIPsMap = la.iPsForDays();
+    System.out.println("Question 9 - Answer: " + la.dayWithMostIPVisits(daysIPsMap));
+
+    ips = la.iPsWithMostVisitsOnDay(daysIPsMap, "Sep 29");
+    System.out.println("Question 10 - Answer:");
+    for (String ip : ips) {
+      System.out.println(ip);
+    }
+  }
+
 }
