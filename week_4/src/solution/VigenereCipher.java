@@ -1,6 +1,7 @@
 package solution;
 
 import java.util.Arrays;
+import edu.duke.FileResource;
 
 public class VigenereCipher {
 
@@ -39,6 +40,18 @@ public class VigenereCipher {
 
   public String toString() {
     return Arrays.toString(ciphers);
+  }
+
+  public static void main(String[] args) {
+    int[] key = {17, 14, 12, 4};
+    VigenereCipher vc = new VigenereCipher(key);
+    FileResource fr = new FileResource("../txt/titus-small.txt");
+    String input = fr.asString();
+    System.out.println(input);
+    String encrypted = vc.encrypt(input);
+    System.out.println(encrypted);
+    String decrypted = vc.decrypt(encrypted);
+    System.out.println(decrypted);
   }
 
 }

@@ -1,5 +1,7 @@
 package solution;
 
+import edu.duke.FileResource;
+
 public class CaesarCracker {
 
   char mostCommon;
@@ -49,6 +51,26 @@ public class CaesarCracker {
     int key = getKey(encrypted);
     CaesarCipher cc = new CaesarCipher(key);
     return cc.decrypt(encrypted);
+  }
+
+  public static void main(String[] args) {
+    CaesarCracker cc = new CaesarCracker();
+    FileResource fr = new FileResource("../txt/titus-small_key5.txt");
+    String encrypted = fr.asString();
+    System.out.println(encrypted);
+    int key = cc.getKey(encrypted);
+    System.out.println("key = " + key + "\n");
+    String decrypted = cc.decrypt(encrypted);
+    System.out.println(decrypted);
+
+    cc = new CaesarCracker('a');
+    fr = new FileResource("../txt/oslusiadas_key17.txt");
+    encrypted = fr.asString();
+    System.out.println(encrypted);
+    key = cc.getKey(encrypted);
+    System.out.println("key = " + key + "\n");
+    decrypted = cc.decrypt(encrypted);
+    System.out.println(decrypted);
   }
 
 }

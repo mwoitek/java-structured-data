@@ -1,5 +1,7 @@
 package solution;
 
+import edu.duke.FileResource;
+
 public class CaesarCipher {
 
   private String alphabet;
@@ -50,6 +52,17 @@ public class CaesarCipher {
 
   public String toString() {
     return "" + theKey;
+  }
+
+  public static void main(String[] args) {
+    CaesarCipher cc = new CaesarCipher(17);
+    FileResource fr = new FileResource("../txt/titus-small.txt");
+    String input = fr.asString();
+    System.out.println(input);
+    String encrypted = cc.encrypt(input);
+    System.out.println(encrypted);
+    String decrypted = cc.decrypt(encrypted);
+    System.out.println(decrypted);
   }
 
 }
