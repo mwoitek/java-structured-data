@@ -143,48 +143,40 @@ public class VigenereBreaker {
         new HashMap<String, HashSet<String>>();
     String[] langs = {"Danish", "Dutch", "English", "French", "German", "Italian",
         "Portuguese", "Spanish"};
-    FileResource frDictionary;
-    HashSet<String> dictionary;
+    FileResource fr;
     for (int i = 0; i < langs.length; i++) {
-      frDictionary = new FileResource("../txt/dictionaries/" + langs[i]);
-      dictionary = readDictionary(frDictionary);
-      dictionaries.put(langs[i], dictionary);
+      fr = new FileResource("../txt/dictionaries/" + langs[i]);
+      dictionaries.put(langs[i], readDictionary(fr));
     }
     return dictionaries;
   }
 
   public void breakForAllLangs(String encrypted,
       HashMap<String, HashSet<String>> languages) {
-    HashMap<String, String> decryptedMap = new HashMap<String, String>();
-    HashSet<String> dictionary;
-    String decrypted;
-    for (String lang : languages.keySet()) {
-      dictionary = languages.get(lang);
-      decrypted = breakForLanguage(encrypted, dictionary);
-      decryptedMap.put(lang, decrypted);
-    }
-
     String langBest = "";
+    String decryptedBest = "";
+    String decrypted;
+    HashSet<String> dictionary;
     int count;
     int maxCount = -1;
     for (String lang : languages.keySet()) {
       dictionary = languages.get(lang);
-      decrypted = decryptedMap.get(lang);
+      decrypted = breakForLanguage(encrypted, dictionary);
       count = countWords(decrypted, dictionary);
       if (count > maxCount) {
         langBest = lang;
+        decryptedBest = decrypted;
         maxCount = count;
       }
     }
-
     System.out.println("Language: " + langBest);
     System.out.println("Decrypted message:");
-    System.out.println(decryptedMap.get(langBest));
+    System.out.println(decryptedBest);
   }
 
   public void breakVigenere() {
-    FileResource frEncrypted = new FileResource();
-    String encrypted = frEncrypted.asString();
+    FileResource fr = new FileResource();
+    String encrypted = fr.asString();
     HashMap<String, HashSet<String>> languages = readDictionaries();
     breakForAllLangs(encrypted, languages);
   }
@@ -192,7 +184,6 @@ public class VigenereBreaker {
   public static void main(String[] args) {
     VigenereBreaker vb = new VigenereBreaker();
     vb.breakVigenere();
-
     // vb.testSliceString();
     // vb.testTryKeyLength();
     // vb.testMostCommonCharIn();
