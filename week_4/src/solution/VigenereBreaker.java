@@ -49,13 +49,23 @@ public class VigenereBreaker {
   }
 
   public void breakVigenere() {
-    // HERE
+    FileResource fr = new FileResource("../txt/athens_keyflute.txt");
+    String encrypted = fr.asString();
+    int klength = 5;
+    char mostCommon = 'e';
+    int[] key = tryKeyLength(encrypted, klength, mostCommon);
+    VigenereCipher vc = new VigenereCipher(key);
+    String decrypted = vc.decrypt(encrypted);
+    System.out.println(decrypted);
   }
 
   public static void main(String[] args) {
     VigenereBreaker vb = new VigenereBreaker();
+
     // vb.testSliceString();
-    vb.testTryKeyLength();
+    // vb.testTryKeyLength();
+
+    vb.breakVigenere();
   }
 
 }
