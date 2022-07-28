@@ -1,5 +1,6 @@
 package solution;
 
+import java.util.HashSet;
 import edu.duke.FileResource;
 
 public class VigenereBreaker {
@@ -48,24 +49,61 @@ public class VigenereBreaker {
     }
   }
 
-  public void breakVigenere() {
-    FileResource fr = new FileResource("../txt/athens_keyflute.txt");
-    String encrypted = fr.asString();
-    int klength = 5;
+  public HashSet<String> readDictionary(FileResource fr) {
+    HashSet<String> dictionary = new HashSet<String>();
+    for (String line : fr.lines()) {
+      dictionary.add(line.toLowerCase());
+    }
+    return dictionary;
+  }
+
+  public int countWords(String message, HashSet<String> dictionary) {
+    int count = 0;
+    String[] words = message.split("\\W+");
+    for (int i = 0; i < words.length; i++) {
+      if (dictionary.contains(words[i].toLowerCase())) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  public String breakForLanguage(String encrypted, HashSet<String> dictionary) {
+    String decryptedBest = "";
+    String decrypted;
     char mostCommon = 'e';
-    int[] key = tryKeyLength(encrypted, klength, mostCommon);
-    VigenereCipher vc = new VigenereCipher(key);
-    String decrypted = vc.decrypt(encrypted);
+    int[] key;
+    VigenereCipher vc;
+    int count;
+    int maxCount = -1;
+    for (int klength = 1; klength <= 100; klength++) {
+      key = tryKeyLength(encrypted, klength, mostCommon);
+      vc = new VigenereCipher(key);
+      decrypted = vc.decrypt(encrypted);
+      count = countWords(decrypted, dictionary);
+      if (count > maxCount) {
+        decryptedBest = decrypted;
+        maxCount = count;
+      }
+    }
+    return decryptedBest;
+  }
+
+  public void breakVigenere() {
+    FileResource frEncrypted = new FileResource("../txt/athens_keyflute.txt");
+    String encrypted = frEncrypted.asString();
+    FileResource frDictionary = new FileResource("../txt/dictionaries/English");
+    HashSet<String> dictionary = readDictionary(frDictionary);
+    String decrypted = breakForLanguage(encrypted, dictionary);
     System.out.println(decrypted);
   }
 
   public static void main(String[] args) {
     VigenereBreaker vb = new VigenereBreaker();
+    vb.breakVigenere();
 
     // vb.testSliceString();
     // vb.testTryKeyLength();
-
-    vb.breakVigenere();
   }
 
 }
